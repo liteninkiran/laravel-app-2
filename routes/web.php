@@ -32,7 +32,7 @@ Route::post('/login', [LoginController::class, 'store']);
 
 Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 
-Route::get('/home', function()
+Route::get('/', function()
 {
     return view('home');
 })->name('home');
