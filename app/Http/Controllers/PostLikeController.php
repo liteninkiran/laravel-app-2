@@ -25,7 +25,15 @@ class PostLikeController extends Controller
 
         $post->likes()->create(['user_id' => $user->id]);
 
-        Mail::to($post->user)->send(new PostLike($user, $post));
+        // Check number of times user has previously liked post
+        if(!$post->likes()->onlyTrashed()->where('user_id', $request->user()->id)->count())
+        {
+            // Do not self-notify
+            if($post->user->id != $request->user()->id)
+            {
+                Mail::to($post->user)->send(new PostLike($user, $post));
+            }
+        }
 
         return back();
     }
