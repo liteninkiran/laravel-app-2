@@ -4,33 +4,37 @@
     <div class="flex justify-center">
         <div class="w-8/12 bg-white p-6 rounded-lg">
 
-            <form action="{{ route('posts') }}" method="post" class="mb-4">
+            @auth
 
-                @csrf
+                <form action="{{ route('posts') }}" method="post" class="mb-4">
 
-                <div class="mb-4">
+                    @csrf
 
-                    <label for="body" class="sr-only">Body</label>
-                    <textarea name="body"
-                              id="body"
-                              cols="30"
-                              rows="4"
-                              class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('body') border-red-500 @enderror"
-                              placeholder="Post something!"></textarea>
+                    <div class="mb-4">
 
-                    @error('body')
-                        <div class="text-red-500 mt-2 text-sm">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                        <label for="body" class="sr-only">Body</label>
+                        <textarea name="body"
+                                id="body"
+                                cols="30"
+                                rows="4"
+                                class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('body') border-red-500 @enderror"
+                                placeholder="Post something!"></textarea>
 
-                </div>
+                        @error('body')
+                            <div class="text-red-500 mt-2 text-sm">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
-                <div>
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded font-medium">Post</button>
-                </div>
+                    </div>
 
-            </form>
+                    <div>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded font-medium">Post</button>
+                    </div>
+
+                </form>
+
+            @endauth
 
             @if ($posts->count())
 
@@ -43,6 +47,16 @@
             @else
                 <p>There are no posts</p>
             @endif
+
+            @guest
+
+                <div class="mb-4">
+
+                    <p>Please log in to post and like comments</p>
+
+                </div>
+            
+            @endguest
 
         </div>
     </div>
