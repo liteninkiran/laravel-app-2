@@ -38,9 +38,10 @@ class RegisterController extends Controller
 
         User::create($data);
 
-        return redirect()->route('dashboard');
+        // Authenticate user
+        auth()->attempt($request->only('email', 'password'));
 
-        // Sign in user
         // Redirect
+        return redirect()->route('dashboard');
     }
 }
